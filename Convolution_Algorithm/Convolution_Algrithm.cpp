@@ -4,19 +4,20 @@
 int main(){
 	int satir,sutun,fkenar;
 	int satir_,sutun_,toplam;
-	int matrix[satir][sutun];
-	int filtre[fkenar][fkenar];
-	int smatrix[satir_][sutun_];
+	
+	int filtreToplam;
 	//Matrisleri alma
 	printf("Verileri iceren matris:	\n");
 	printf("Girmek istediginiz matrisin satir sayisi: ");
 	scanf("%d",&satir);
 	printf("Girmek istediginiz matrisin sutun sayisi: ");
 	scanf("%d",&sutun);
-	printf("Matrisin elemanlarini giriniz: ");
-	for (int i=0;i<sutun;i++){
-		for(int j=0;j<satir;j++){
-			printf("%d. sutun, %d.satir: ", i,j);
+	printf("Matrisin elemanlarini giriniz: \n");
+	int matrix[satir][sutun];
+	
+	for (int i=0;i<satir;i++){
+		for(int j=0;j<sutun;j++){
+			printf("%d. sutun, %d.satir: ", i+1,j+1);
 			scanf("%d",&matrix[i][j]);
 		}
 	}
@@ -24,36 +25,59 @@ int main(){
 	printf("Filtre matrisi:	\n");
 	printf("Filtre matrisinin satir ve sutun sayisi: ");
 	scanf("%d",&fkenar);
+	int filtre[fkenar][fkenar];
 	for (int i=0;i<fkenar;i++){
 		for(int j=0;j<fkenar;j++){
-			printf("%d. sutun, %d.satir: ", i,j);
+			printf("%d. sutun, %d.satir: ", i+1,j+1);
 			scanf("%d",&filtre[i][j]);
+			filtreToplam = filtreToplam+filtre[i][j];
 		}
 	}
+	
+	
 	sutun_ = sutun - fkenar +1;
 	satir_ = satir - fkenar +1;
-	//Konvülasyon iþlemi
+	int smatrix[satir_][sutun_];
+	//KonvÃ¼lasyon iÅŸlemi
 	for(int i = 0; i < satir_;i++){
+		printf("i ye girdi\n");
 		for(int j = 0; j < sutun_;j++){
-			smatrix[i][j] = toplam;
+			printf("j ye girdi\n");
+			toplam = 0;
 			for(int p = 0; p < fkenar;p++){
-				for(int t; t < fkenar;t++){
-					 toplam =  toplam + matrix[p+i][t+j]*filtre[p][t];
+				printf("p ye girdi\n");
+				for(int t=0; t < fkenar;t++){
+					printf("t ye girdi\n");
+					toplam =  toplam + matrix[p+i][t+j]*filtre[p][t];
+					printf("toplam = matrix(%d,%d) * filtre(%d,%d) \n",p+j,t+i,p,t);
+					printf("toplam = %d \n",toplam);
 				}
 			}
+			printf("toplami yazdi (%d,%d) %d \n",i,j, toplam);
+			smatrix[i][j] = toplam/filtreToplam;
+			
 		}
 	}
-	
-	//Sonuc Matrisini yazdýrma:
-	
-	for (int i=0;i<sutun_;i++){
-		for(int j=0;j<satir_;j++){
+	printf("\n");
+	for (int i=0;i<satir_;i++){
+		for(int j=0;j<sutun_;j++){
 			printf("%d ",smatrix[i][j]);			
 		}
 		printf("\n");
-	}	
-		
+	}
+	printf("\n");
+	for (int i=0;i<satir;i++){
+		for(int j=0;j<sutun;j++){
+			printf("%d ",matrix[i][j]);			
+		}
+		printf("\n");
+	}
+	printf("\n");
+	for (int i=0;i<fkenar;i++){
+		for(int j=0;j<fkenar;j++){
+			printf("%d ",filtre[i][j]);			
+		}
+		printf("\n");
+	}
 	return 0;
 }
-	
-
